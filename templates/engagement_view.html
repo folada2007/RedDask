@@ -1,0 +1,60 @@
+{{define "content"}}
+<div class="header-row">
+    <div>
+        <h1>{{.Engagement.Name}}</h1>
+        <p>Клиент: <a href="/clients/view?id={{.Engagement.ClientID}}">{{.Engagement.ClientName}}</a></p>
+    </div>
+    <div>
+        <a href="/engagements/report?id={{.Engagement.ID}}" target="_blank" class="btn btn-gray">Отчёт для печати</a>
+        <a href="/engagements/edit?id={{.Engagement.ID}}" class="btn btn-gray">Изменить</a>
+        <a href="/findings/new?engagement_id={{.Engagement.ID}}" class="btn">+ Добавить уязвимость</a>
+    </div>
+</div>
+
+<div class="card">
+    <p><b>Тип теста:</b> {{.Engagement.Type}}</p>
+    <p><b>Статус:</b> {{.Engagement.Status}}</p>
+    <p><b>Сроки:</b> {{.Engagement.StartDate}} — {{.Engagement.EndDate}}</p>
+    <p><b>Пентестер:</b> {{.Engagement.Pentester}}</p>
+    <p><b>Scope:</b><br><pre style="font-family:inherit; margin:4px 0;">{{.Engagement.Scope}}</pre></p>
+</div>
+
+<h2>Найденные уязвимости</h2>
+{{if .Engagement.Findings}}
+<table>
+    <thead>
+        <tr>
+            <th>Название</th>
+            <th>Критичность</th>
+            <th>CVSS</th>
+            <th>CVE</th>
+            <th>Статус</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{range .Engagement.Findings}}
+        <tr>
+            <td>
+                <b>{{.Title}}</b><br>
+                <small>{{.Description}}</small><br>
+                <small><i>Рекомендация: {{.Recommendation}}</i></small>
+            </td>
+            <td><span class="badge sev-{{.Severity}}">{{.Severity}}</span></td>
+            <td>{{.Cvss}}</td>
+            <td>{{.CveID}}</td>
+            <td>{{.Status}}</td>
+            <td>
+                <a href="/findings/edit?id={{.ID}}" class="btn btn-sm btn-gray">Изм.</a>
+                <form action="/findings/delete?id={{.ID}}" method="POST" style="display:inline;" onsubmit="return confirm('Удалить уязвимость?');">
+                    <button type="submit" class="btn btn-sm btn-red">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        {{end}}
+    </tbody>
+</table>
+{{else}}
+<p>Уязвимостей пока не добавлено.</p>
+{{end}}
+{{end}}

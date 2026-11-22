@@ -1,0 +1,54 @@
+{{define "content"}}
+<h1>{{.Title}}</h1>
+
+<div class="card" style="max-width: 600px;">
+    {{if .Error}}
+    <div class="error-msg">{{.Error}}</div>
+    {{end}}
+
+    <form method="POST">
+        <input type="hidden" name="engagement_id" value="{{.Finding.EngagementID}}">
+
+        <div class="form-group">
+            <label>Название уязвимости *</label>
+            <input type="text" name="title" value="{{.Finding.Title}}" required>
+        </div>
+        <div class="form-group">
+            <label>Критичность *</label>
+            <select name="severity">
+                <option value="Critical" {{if eq .Finding.Severity "Critical"}}selected{{end}}>Critical</option>
+                <option value="High" {{if eq .Finding.Severity "High"}}selected{{end}}>High</option>
+                <option value="Medium" {{if eq .Finding.Severity "Medium"}}selected{{end}}>Medium</option>
+                <option value="Low" {{if eq .Finding.Severity "Low"}}selected{{end}}>Low</option>
+                <option value="Info" {{if eq .Finding.Severity "Info"}}selected{{end}}>Info</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Оценка CVSS (0.0 - 10.0)</label>
+            <input type="number" step="0.1" min="0" max="10" name="cvss" value="{{.Finding.Cvss}}">
+        </div>
+        <div class="form-group">
+            <label>CVE (если есть)</label>
+            <input type="text" name="cve_id" placeholder="CVE-2024-1234" value="{{.Finding.CveID}}">
+        </div>
+        <div class="form-group">
+            <label>Статус</label>
+            <select name="status">
+                <option value="Открыта" {{if eq .Finding.Status "Открыта"}}selected{{end}}>Открыта</option>
+                <option value="Исправлена" {{if eq .Finding.Status "Исправлена"}}selected{{end}}>Исправлена</option>
+                <option value="Риск принят" {{if eq .Finding.Status "Риск принят"}}selected{{end}}>Риск принят</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Описание проблемы *</label>
+            <textarea name="description" rows="4" required>{{.Finding.Description}}</textarea>
+        </div>
+        <div class="form-group">
+            <label>Рекомендации по исправлению *</label>
+            <textarea name="recommendation" rows="3" required>{{.Finding.Recommendation}}</textarea>
+        </div>
+        <button type="submit" class="btn">Сохранить</button>
+        <a href="/engagements/view?id={{.Finding.EngagementID}}" class="btn btn-gray">Отмена</a>
+    </form>
+</div>
+{{end}}

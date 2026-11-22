@@ -1,0 +1,5 @@
+reddesk
+reddesk.exe
+*.exe
+.vscode/
+.idea/

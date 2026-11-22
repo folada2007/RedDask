@@ -1,0 +1,42 @@
+{{define "content"}}
+<div class="header-row">
+    <h1>{{.Client.Name}}</h1>
+    <div>
+        <a href="/clients/edit?id={{.Client.ID}}" class="btn btn-gray">Редактировать</a>
+        <a href="/engagements/new?client_id={{.Client.ID}}" class="btn">+ Новый проект</a>
+    </div>
+</div>
+
+<div class="card">
+    <p><b>Контактное лицо:</b> {{.Client.ContactPerson}}</p>
+    <p><b>Email:</b> {{.Client.Email}}</p>
+    <p><b>Телефон:</b> {{.Client.Phone}}</p>
+    <p><b>Отрасль:</b> {{.Client.Industry}}</p>
+</div>
+
+<h2>Проекты клиента</h2>
+{{if .Engagements}}
+<table>
+    <thead>
+        <tr>
+            <th>Название</th>
+            <th>Тип</th>
+            <th>Статус</th>
+            <th>Дата начала</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{range .Engagements}}
+        <tr>
+            <td><a href="/engagements/view?id={{.ID}}">{{.Name}}</a></td>
+            <td>{{.Type}}</td>
+            <td>{{.Status}}</td>
+            <td>{{.StartDate}}</td>
+        </tr>
+        {{end}}
+    </tbody>
+</table>
+{{else}}
+<p>У этого клиента пока нет проектов.</p>
+{{end}}
+{{end}}

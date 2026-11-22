@@ -1,0 +1,25 @@
+{{define "layout"}}<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.Title}} — RedDesk</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="navbar">
+        <a href="/" class="logo">RedDesk CRM</a>
+        <div>
+            <a href="/">Главная</a>
+            <a href="/clients">Клиенты</a>
+            <a href="/engagements">Проекты</a>
+        </div>
+    </div>
+    <div class="container">
+        {{template "content" .}}
+    </div>
+    <div class="footer">
+        Учебный проект — система учёта пентестов RedDesk
+    </div>
+</body>
+</html>
+{{end}}

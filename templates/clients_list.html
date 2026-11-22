@@ -1,0 +1,42 @@
+{{define "content"}}
+<div class="header-row">
+    <h1>Список клиентов</h1>
+    <a href="/clients/new" class="btn">+ Добавить клиента</a>
+</div>
+
+{{if .Clients}}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Компания</th>
+            <th>Контактное лицо</th>
+            <th>Email</th>
+            <th>Телефон</th>
+            <th>Отрасль</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{range .Clients}}
+        <tr>
+            <td>{{.ID}}</td>
+            <td><a href="/clients/view?id={{.ID}}">{{.Name}}</a></td>
+            <td>{{.ContactPerson}}</td>
+            <td>{{.Email}}</td>
+            <td>{{.Phone}}</td>
+            <td>{{.Industry}}</td>
+            <td>
+                <a href="/clients/edit?id={{.ID}}" class="btn btn-sm btn-gray">Изм.</a>
+                <form action="/clients/delete?id={{.ID}}" method="POST" style="display:inline;" onsubmit="return confirm('Удалить клиента?');">
+                    <button type="submit" class="btn btn-sm btn-red">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        {{end}}
+    </tbody>
+</table>
+{{else}}
+<p>Клиентов пока нет.</p>
+{{end}}
+{{end}}

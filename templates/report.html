@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Отчёт — {{.Engagement.Name}}</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; color: #111; line-height: 1.5; }
+        h1, h2, h3 { border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+        .item { margin-bottom: 20px; padding: 10px; border: 1px solid #ddd; }
+        @media print { .no-print { display: none; } }
+    </style>
+</head>
+<body>
+    <div class="no-print" style="margin-bottom: 20px;">
+        <button onclick="window.print()">Распечатать / Сохранить PDF</button>
+    </div>
+
+    <h1>Отчёт о проведении тестирования на проникновение</h1>
+    <p><b>Проект:</b> {{.Engagement.Name}}</p>
+    <p><b>Заказчик:</b> {{.Engagement.ClientName}}</p>
+    <p><b>Тип работ:</b> {{.Engagement.Type}}</p>
+    <p><b>Сроки проведения:</b> {{.Engagement.StartDate}} — {{.Engagement.EndDate}}</p>
+    <p><b>Исполнитель:</b> {{.Engagement.Pentester}}</p>
+    <p><b>Область тестирования (Scope):</b> {{.Engagement.Scope}}</p>
+
+    <h2>Найденные уязвимости</h2>
+    {{if .Engagement.Findings}}
+        {{range .Engagement.Findings}}
+        <div class="item">
+            <h3>{{.Title}} [{{.Severity}} / CVSS: {{.Cvss}}]</h3>
+            <p><b>Статус:</b> {{.Status}} {{if .CveID}}| <b>CVE:</b> {{.CveID}}{{end}}</p>
+            <p><b>Описание:</b><br>{{.Description}}</p>
+            <p><b>Рекомендации:</b><br>{{.Recommendation}}</p>
+        </div>
+        {{end}}
+    {{else}}
+        <p>Уязвимости не выявлены.</p>
+    {{end}}
+</body>
+</html>

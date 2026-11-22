@@ -1,0 +1,50 @@
+{{define "content"}}
+<div class="header-row">
+    <h1>Проекты аудита</h1>
+    <a href="/engagements/new" class="btn">+ Добавить проект</a>
+</div>
+
+<div class="filters">
+    <b>Фильтр по статусу:</b>
+    <a href="/engagements">Все</a>
+    <a href="/engagements?status=Запланирован">Запланирован</a>
+    <a href="/engagements?status=В работе">В работе</a>
+    <a href="/engagements?status=Завершён">Завершён</a>
+</div>
+
+{{if .Engagements}}
+<table>
+    <thead>
+        <tr>
+            <th>Проект</th>
+            <th>Клиент</th>
+            <th>Тип</th>
+            <th>Статус</th>
+            <th>Дата начала</th>
+            <th>Пентестер</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{range .Engagements}}
+        <tr>
+            <td><a href="/engagements/view?id={{.ID}}">{{.Name}}</a></td>
+            <td>{{.ClientName}}</td>
+            <td>{{.Type}}</td>
+            <td>{{.Status}}</td>
+            <td>{{.StartDate}}</td>
+            <td>{{.Pentester}}</td>
+            <td>
+                <a href="/engagements/edit?id={{.ID}}" class="btn btn-sm btn-gray">Изм.</a>
+                <form action="/engagements/delete?id={{.ID}}" method="POST" style="display:inline;" onsubmit="return confirm('Удалить проект?');">
+                    <button type="submit" class="btn btn-sm btn-red">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        {{end}}
+    </tbody>
+</table>
+{{else}}
+<p>Проектов не найдено.</p>
+{{end}}
+{{end}}

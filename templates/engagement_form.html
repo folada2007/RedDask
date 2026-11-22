@@ -1,0 +1,59 @@
+{{define "content"}}
+<h1>{{.Title}}</h1>
+
+<div class="card" style="max-width: 600px;">
+    {{if .Error}}
+    <div class="error-msg">{{.Error}}</div>
+    {{end}}
+
+    <form method="POST">
+        <div class="form-group">
+            <label>Клиент *</label>
+            <select name="client_id">
+                {{range .Clients}}
+                <option value="{{.ID}}" {{if eq .ID $.Engagement.ClientID}}selected{{end}}>{{.Name}}</option>
+                {{end}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Название проекта *</label>
+            <input type="text" name="name" value="{{.Engagement.Name}}" required>
+        </div>
+        <div class="form-group">
+            <label>Тип тестирования *</label>
+            <select name="type">
+                <option value="Внешний тест" {{if eq .Engagement.Type "Внешний тест"}}selected{{end}}>Внешний тест</option>
+                <option value="Внутренний тест" {{if eq .Engagement.Type "Внутренний тест"}}selected{{end}}>Внутренний тест</option>
+                <option value="Web-приложение" {{if eq .Engagement.Type "Web-приложение"}}selected{{end}}>Web-приложение</option>
+                <option value="Wi-Fi" {{if eq .Engagement.Type "Wi-Fi"}}selected{{end}}>Wi-Fi</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Статус *</label>
+            <select name="status">
+                <option value="Запланирован" {{if eq .Engagement.Status "Запланирован"}}selected{{end}}>Запланирован</option>
+                <option value="В работе" {{if eq .Engagement.Status "В работе"}}selected{{end}}>В работе</option>
+                <option value="Завершён" {{if eq .Engagement.Status "Завершён"}}selected{{end}}>Завершён</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Дата начала *</label>
+            <input type="date" name="start_date" value="{{.Engagement.StartDate}}" required>
+        </div>
+        <div class="form-group">
+            <label>Дата окончания</label>
+            <input type="date" name="end_date" value="{{.Engagement.EndDate}}">
+        </div>
+        <div class="form-group">
+            <label>Ответственный пентестер *</label>
+            <input type="text" name="pentester" value="{{.Engagement.Pentester}}" required>
+        </div>
+        <div class="form-group">
+            <label>Область тестирования (Scope) *</label>
+            <textarea name="scope" rows="3" required>{{.Engagement.Scope}}</textarea>
+        </div>
+        <button type="submit" class="btn">Сохранить</button>
+        <a href="/engagements" class="btn btn-gray">Отмена</a>
+    </form>
+</div>
+{{end}}

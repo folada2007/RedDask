@@ -1,0 +1,52 @@
+{{define "content"}}
+<h1>Сводка по проектам</h1>
+
+<div class="stats-grid">
+    <div class="stat-box">
+        <div class="stat-num">{{.ClientsCount}}</div>
+        <div>Всего клиентов</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-num">{{.ActiveCount}}</div>
+        <div>Проектов в работе</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-num">{{.OpenFindings}}</div>
+        <div>Открытых уязвимостей</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-num red">{{.CriticalCount}}</div>
+        <div>Критичных (Critical)</div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Последние открытые уязвимости</h2>
+    {{if .Findings}}
+    <table>
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Проект</th>
+                <th>Критичность</th>
+                <th>CVSS</th>
+                <th>Статус</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .Findings}}
+            <tr>
+                <td>{{.Title}}</td>
+                <td><a href="/engagements/view?id={{.EngagementID}}">{{.EngagementName}}</a></td>
+                <td><span class="badge sev-{{.Severity}}">{{.Severity}}</span></td>
+                <td>{{.Cvss}}</td>
+                <td>{{.Status}}</td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+    {{else}}
+    <p>Открытых уязвимостей пока нет.</p>
+    {{end}}
+</div>
+{{end}}

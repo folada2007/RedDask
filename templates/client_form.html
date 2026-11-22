@@ -1,0 +1,34 @@
+{{define "content"}}
+<h1>{{.Title}}</h1>
+
+<div class="card" style="max-width: 550px;">
+    {{if .Error}}
+    <div class="error-msg">{{.Error}}</div>
+    {{end}}
+
+    <form method="POST">
+        <div class="form-group">
+            <label>Название компании *</label>
+            <input type="text" name="name" value="{{.Client.Name}}" required>
+        </div>
+        <div class="form-group">
+            <label>Контактное лицо *</label>
+            <input type="text" name="contact_person" value="{{.Client.ContactPerson}}" required>
+        </div>
+        <div class="form-group">
+            <label>Email *</label>
+            <input type="email" name="email" value="{{.Client.Email}}" required>
+        </div>
+        <div class="form-group">
+            <label>Телефон</label>
+            <input type="text" name="phone" value="{{.Client.Phone}}">
+        </div>
+        <div class="form-group">
+            <label>Отрасль</label>
+            <input type="text" name="industry" value="{{.Client.Industry}}">
+        </div>
+        <button type="submit" class="btn">Сохранить</button>
+        <a href="/clients" class="btn btn-gray">Отмена</a>
+    </form>
+</div>
+{{end}}
